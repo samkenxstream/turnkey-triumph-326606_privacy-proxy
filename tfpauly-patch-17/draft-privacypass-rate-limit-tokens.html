@@ -16,26 +16,26 @@ that allows for tokens to be rate-limited on a per-origin basis. This
 enables origins to use tokens for use cases that need to restrict access
 from anonymous clients. 
     " name="description">
-<meta content="xml2rfc 3.12.4" name="generator">
+<meta content="xml2rfc 3.12.10" name="generator">
 <meta content="Internet-Draft" name="keyword">
-<meta content="draft-privacypass-rate-limit-tokens" name="ietf.draft">
+<meta content="draft-privacypass-rate-limit-tokens-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.12.4
-    Python 3.9.7
+  xml2rfc 3.12.10
+    Python 3.10.4
     appdirs 1.4.4
-    ConfigArgParse 1.3
+    ConfigArgParse 1.5.3
     google-i18n-address 2.5.1
     html5lib 1.1
     intervaltree 3.1.0
     Jinja2 2.11.3
     kitchen 1.2.6
-    lxml 4.6.5
+    lxml 4.8.0
     MarkupSafe 2.0.1
     pycountry 20.7.3
-    pyflakes 2.3.1
-    PyYAML 5.4.1
-    requests 2.26.0
-    setuptools 52.0.0
+    pyflakes 2.4.0
+    PyYAML 6.0
+    requests 2.27.1
+    setuptools 59.4.0
     six 1.16.0
 -->
 <link href="draft-privacypass-rate-limit-tokens.xml" rel="alternate" type="application/rfc+xml">
@@ -160,6 +160,14 @@ from anonymous clients.
   font-weight: 700;
   font-display: swap;
   src: local('Lora Bold'), local('Lora-Bold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-bold-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Lora';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/lora-semibold-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -343,7 +351,7 @@ ol, ul {
   padding: 0;
   margin: 0 0 0.5em 2em;
 }
-ol ol, ul ul, ol ul, ul ol {
+:is(ol, ul) :is(ol, ul) {
   margin-left: 1em;
 }
 li {
@@ -358,8 +366,7 @@ ul.empty, .ulEmpty {
 ul.empty li, .ulEmpty li {
   margin-top: 0.5em;
 }
-ul.compact, .ulCompact,
-ol.compact, .olCompact {
+:is(ul, ol).compact, .ulCompact, .olCompact {
   line-height: 100%;
   margin: 0 0 0 2em;
 }
@@ -375,7 +382,7 @@ dl > dd {
   margin-bottom: .8em;
   min-height: 1.3em;
 }
-dl.compact > dd, .dlCompact > dd {
+:is(dl.compact, .dlCompact) > dd {
   margin-bottom: 0em;
 }
 dl > dd > dl {
@@ -417,6 +424,9 @@ tt, code {
      remove leading to avoid altering the final height of lines */
   line-height: 0;
 }
+:is(h1, h2, h3, h4, h5, h6) :is(tt, code) {
+  font-size: 84%;
+}
 pre {
   border: 1px solid var(--line-color);
   font-size: 13.5px;
@@ -441,6 +451,19 @@ figcaption, caption {
   text-align: left;
 }
 @media screen {
+  /* Auto-collapse boilerplate. */
+  :is(#status-of-memo, #copyright) p {
+    margin: -2px 0;
+    max-height: 0;
+    transition: max-height 2s ease, margin 0.5s ease 0.5s;
+    overflow: hidden;
+  }
+  :is(#status-of-memo, #copyright):hover p,
+  :is(#status-of-memo, #copyright) h2:target ~ p {
+    margin: 0.5em 0;
+    max-height: 500px;
+    overflow: auto;
+  }
   pre, svg {
     display: inline-block;
     overflow-x: auto;
@@ -456,7 +479,7 @@ figcaption, caption {
     display: block;
     width: calc(100% - 25px);
   }
-  pre + .pilcrow, svg + .pilcrow {
+  :is(pre, svg) + .pilcrow {
     display: inline-block;
     vertical-align: text-bottom;
     padding-bottom: 8px;
@@ -505,17 +528,11 @@ th, td {
 th {
   background-color: var(--line-color);
 }
-tr:nth-child(2n) > td {
+:is(tr:nth-child(2n), thead+tbody > tr:nth-child(2n+1)) > td {
   background-color: var(--background-color);
 }
-tr:nth-child(2n+1) > td {
+:is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
   background-color: var(--highlight-color);
-}
-thead+tbody > tr:nth-child(2n) > td {
-  background-color: var(--highlight-color);
-}
-thead+tbody > tr:nth-child(2n+1) > td {
-  background-color: var(--background-color);
 }
 table caption {
   margin: 0;
@@ -555,8 +572,9 @@ hr {
 }
 .bcp14 {
   font-variant: small-caps;
+  font-weight: 600;
+  font-size: 14.5px;
 }
-
 .role {
   font-variant: all-small-caps;
 }
@@ -795,7 +813,7 @@ hr.addr {
     margin: 0 0 0 4px;
     font-size: var(--small-font-size);
   }
-  #toc ul p, #toc ul li {
+  #toc ul :is(p, li) {
     margin: 2px 0;
     line-height: 22px;
   }
@@ -905,13 +923,13 @@ dl.dlNewline > dt {
 }
 
 /* Provide styling for table cell text alignment */
-table .text-left, table .text-left {
+table .text-left {
   text-align: left;
 }
-table .text-center, table .text-center {
+table .text-center {
   text-align: center;
 }
-table .text-right, table .text-right {
+table .text-right {
   text-align: right;
 }
 
@@ -978,12 +996,6 @@ address div.right {
   }
 
 }
-/* Tweak the bcp14 keyword presentation */
-.bcp14 {
-  font-variant: small-caps;
-  font-weight: bold;
-  font-size: 0.9em;
-}
 
 /* Dark mode. */
 @media (prefers-color-scheme: dark) {
@@ -998,19 +1010,20 @@ address div.right {
   --pilcrow-strong: #666;
   scrollbar-color: #777 #333;
 }
-/* Trick: a prefix match works because only black and white are allowed */
-svg [stroke="black"], svg [stroke^="#000"] {
+}
+
+/* SVG Trick: a prefix match works because only black and white are allowed */
+svg :is([stroke="black"], [stroke^="#000"]) {
   stroke: var(--text-color);
 }
-svg [stroke="white"], svg [stroke^="#fff"] {
+svg :is([stroke="white"], [stroke^="#fff"]) {
   stroke: var(--background-color);
 }
-svg [fill="black"], svg [fill^="#000"], svg :not([fill]) {
+svg :is([fill="black"], [fill^="#000"], :not([fill])) {
   fill: var(--text-color);
 }
-svg [stroke="fill"], svg [fill^="#fff"] {
+svg :is([stroke="fill"], [fill^="#fff"]) {
   fill: var(--background-color);
-}
 }
 </style>
 
@@ -1020,11 +1033,11 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Rate-Limited Tokens</td>
-<td class="right">May 2022</td>
+<td class="right">June 2022</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Hendrickson, et al.</td>
-<td class="center">Expires 3 November 2022</td>
+<td class="center">Expires 15 December 2022</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1034,15 +1047,15 @@ svg [stroke="fill"], svg [fill^="#fff"] {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">Network Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-privacypass-rate-limit-tokens</dd>
+<dd class="internet-draft">draft-privacypass-rate-limit-tokens-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-05-02" class="published">2 May 2022</time>
+<time datetime="2022-06-13" class="published">13 June 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2022-11-03">3 November 2022</time></dd>
+<dd class="expires"><time datetime="2022-12-15">15 December 2022</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1103,7 +1116,7 @@ from anonymous clients.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 November 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 15 December 2022.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1391,7 +1404,7 @@ window. The Attester does not know the identity of the Origin the Client is
 trying to access (Origin Name), but knows a Client-anonymized identifier for
 it (Anonymous Origin ID).<a href="#section-1.2-2.1" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-1.2-2.2">The Issuer knows the Origin's secret (Issuer Origin Secret) and policy about client
+          <li class="normal" id="section-1.2-2.2">The Issuer knows a per-Origin secret (Issuer Origin Secret) and policy about client
 access, and learns the Origin's identity (Origin Name) during issuance. The Issuer
 does not learn the Client's identity or information about the Client's access
 pattern.<a href="#section-1.2-2.2" class="pilcrow">¶</a>
@@ -1707,7 +1720,7 @@ e.g., Anonymous Origin ID = HKDF(secret=Client Secret, salt="", info=Origin Name
 of identifying a Client is specific to each Attester, and is not defined in this document.
 As examples, the Attester could use device-specific certificates or account authentication
 to identify a Client.<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.1.2-2">Attesters must enforce that Clients don't change their Client Key frequently, to ensure Clients can't
+<p id="section-5.1.2-2">Attesters need to enforce that Clients don't change their Client Key frequently, to ensure Clients can't
 regularly evade the per-client policy as seen by the issuer. Attesters MUST NOT allow Clients to
 change their Client Key more than once within a policy window, or in the subsequent policy window
 after a previous Client Key change. Alternative schemes where the Attester stores the encrypted
@@ -1723,9 +1736,14 @@ following state:<a href="#section-5.1.2-5" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.1.2-6.2">Whether or not a previous request was rejected by the Issuer<a href="#section-5.1.2-6.2" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-5.1.2-6.3">The last received Anonymous Issuer Origin ID value for this Anonymous Origin ID, if any<a href="#section-5.1.2-6.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-5.1.2-6.3">The previous rate limit provided by the Issuer<a href="#section-5.1.2-6.3" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-5.1.2-6.4">The last received Anonymous Issuer Origin ID value for this Anonymous Origin ID, if any<a href="#section-5.1.2-6.4" class="pilcrow">¶</a>
 </li>
           </ul>
+<p id="section-5.1.2-7">The Issuer-provided rate limit for a single Origin is intended to not change more frequently
+than once per policy window. If the Attester detects a change of rate limit multiple times
+for the state kept for a single policy window, it SHOULD reject the token.<a href="#section-5.1.2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="issuer-state">
@@ -1740,10 +1758,11 @@ policy window. See <a href="#token-key-management" class="xref">Section 10.1</a>
 the Issuer Origin Secret.<a href="#section-5.1.3-1" class="pilcrow">¶</a></p>
 <p id="section-5.1.3-2">Issuers are expected to have the private key that corresponds to Issuer Encapsulation Key,
 which allows them to decrypt the Origin Name values in requests.<a href="#section-5.1.3-2" class="pilcrow">¶</a></p>
-<p id="section-5.1.3-3">Issuers also need to know the set of valid Token Key public keys and corresponding
-private key, for each Origin Name that is served by the Issuer. Origins SHOULD update
-their view of the Token Key regularly to ensure that Client requests do not fail
-after Token Key rotation.<a href="#section-5.1.3-3" class="pilcrow">¶</a></p>
+<p id="section-5.1.3-3">For each Origin, Issuers need to know what rate limit to enforce during a policy window.
+Issuers SHOULD NOT use unique values for specific Origins, which would allow Attesters
+to recognize an Origin being accessed by multiple Clients. Each Origin limit is allowed
+to change, but SHOULD NOT change more often than once per policy window, to ensure that
+the limit is useful.<a href="#section-5.1.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2342,8 +2361,9 @@ request_blind = BKS-SerializePrivatekey(sk_blind)
           <h4 id="name-request-signature">
 <a href="#section-7.1.2" class="section-number selfRef">7.1.2. </a><a href="#name-request-signature" class="section-name selfRef">Request Signature</a>
           </h4>
-<p id="section-7.1.2-1">Clients produce signature of their request based on the following inputs defined in <a href="#request-one" class="xref">Section 5.3</a>:
-<code>token_key_id</code>, <code>blinded_msg</code>, <code>request_key</code>, <code>issuer_encap_key_id</code>, <code>encrypted_token_request</code>.
+<p id="section-7.1.2-1">Clients produce a signature of their request by signing its entire contents
+consisting of the following values defined in <a href="#request-one" class="xref">Section 5.3</a>:
+<code>token_key_id</code>, <code>blinded_msg</code>, <code>request_key</code>, <code>issuer_encap_key_id</code>, and <code>encrypted_token_request</code>.
 This process requires the blind value <code>sk_blind</code> produced during the <a href="#index-request" class="xref">Section 7.1.1</a> process.
 As above, let pk and sk denote Client Key and Client Secret, respectively. Given these
 values, this signature process works as follows:<a href="#section-7.1.2-1" class="pilcrow">¶</a></p>
@@ -2362,6 +2382,7 @@ Client Secret, <code>sk_sign</code> as the signing key.<a href="#section-7.1.2-2
 context = concat(token_type,
                  token_key_id,
                  issuer_encap_key_id,
+                 encode(2, len(encrypted_token_request)),
                  encrypted_token_request)
 request_signature = BKS-BlindKeySign(sk_sign, sk_blind, context)
 </pre><a href="#section-7.1.2-4" class="pilcrow">¶</a>
@@ -2634,6 +2655,11 @@ simply by observing the Issuer identity.<a href="#section-9.4-2.1" class="pilcro
 that an Attester can infer which Origin is accessed by observing the rate limit. This
 can be mitigated by having many Origins share the same rate-limit value.<a href="#section-9.4-2.2" class="pilcrow">¶</a>
 </li>
+          <li class="normal" id="section-9.4-2.3">If an Issuer changes the rate-limit values for a single Origin, that change occurring
+at the same time across multiple Clients could allow Attesters to recognize an Origin
+in common between Clients. To mitigate this, Issuers either can change the limits for
+multiple Origins simultaneously, or have an Origin switch to a separate Issuer name.<a href="#section-9.4-2.3" class="pilcrow">¶</a>
+</li>
         </ul>
 <p id="section-9.4-3">Some deployments MAY choose to relax these requirements, such as in cases where the
 origins being accessed are ubiquitous or do not correspond to user-specific behavior.<a href="#section-9.4-3" class="pilcrow">¶</a></p>
@@ -2798,14 +2824,14 @@ generation) and pk is computed according to <span>[<a href="#RFC8032" class="xre
             <li class="normal" id="section-11.1.2-2.2">BKS-BlindKeyGen(): Generate and output 32 random bytes.<a href="#section-11.1.2-2.2" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-11.1.2-2.3">BKS-BlindPublicKey(pk, bk): Produce a blinded public key based on the input public
-key pk and blind bk according to <span>[<a href="#KEYBLINDING" class="xref">KEYBLINDING</a>], <a href="https://datatracker.ietf.org/doc/html/draft-dew-cfrg-signature-key-blinding-01#section-5.1" class="relref">Section 5.1</a></span>.<a href="#section-11.1.2-2.3" class="pilcrow">¶</a>
+key pk and blind bk according to <span>[<a href="#KEYBLINDING" class="xref">KEYBLINDING</a>], <a href="https://datatracker.ietf.org/doc/html/draft-dew-cfrg-signature-key-blinding-02#section-5.1" class="relref">Section 5.1</a></span>.<a href="#section-11.1.2-2.3" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-11.1.2-2.4">BKS-Verify(pk, msg, sig): Verify the signature sig over input message msg against
 the Ed25519 public key pk, as defined in <span>[<a href="#RFC8032" class="xref">RFC8032</a>], <a href="https://rfc-editor.org/rfc/rfc8032#section-5.1.7" class="relref">Section 5.1.7</a></span>, producing a
 boolean value indicating success.<a href="#section-11.1.2-2.4" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-11.1.2-2.5">BKS-BlindKeySign(sk_sign, sk_blind, msg): Sign input message msg with signing key sk_sign and
-blind sk_blind according to <span>[<a href="#KEYBLINDING" class="xref">KEYBLINDING</a>], <a href="https://datatracker.ietf.org/doc/html/draft-dew-cfrg-signature-key-blinding-01#section-5.2" class="relref">Section 5.2</a></span>, yielding an <code>Nsig=64</code> byte signature.<a href="#section-11.1.2-2.5" class="pilcrow">¶</a>
+blind sk_blind according to <span>[<a href="#KEYBLINDING" class="xref">KEYBLINDING</a>], <a href="https://datatracker.ietf.org/doc/html/draft-dew-cfrg-signature-key-blinding-02#section-5.2" class="relref">Section 5.2</a></span>, yielding an <code>Nsig=64</code> byte signature.<a href="#section-11.1.2-2.5" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-11.1.2-2.6">BKS-SerializePrivatekey(sk): Identity function which outputs sk as an <code>Nsk=32</code> byte buffer.<a href="#section-11.1.2-2.6" class="pilcrow">¶</a>
 </li>
@@ -2893,7 +2919,7 @@ in the "Permanent Message Header Field Names" &lt;<span><a href="https://www.ian
 <dd class="break"></dd>
 <dt id="KEYBLINDING">[KEYBLINDING]</dt>
         <dd>
-<span class="refAuthor">Denis, F.</span>, <span class="refAuthor">Eaton, E.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"Key Blinding for Signature Schemes"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dew-cfrg-signature-key-blinding-01</span>, <time datetime="2022-03-07" class="refDate">7 March 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dew-cfrg-signature-key-blinding-01">https://datatracker.ietf.org/doc/html/draft-dew-cfrg-signature-key-blinding-01</a>&gt;</span>. </dd>
+<span class="refAuthor">Denis, F.</span>, <span class="refAuthor">Eaton, E.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"Key Blinding for Signature Schemes"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dew-cfrg-signature-key-blinding-02</span>, <time datetime="2022-05-03" class="refDate">3 May 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dew-cfrg-signature-key-blinding-02">https://datatracker.ietf.org/doc/html/draft-dew-cfrg-signature-key-blinding-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>

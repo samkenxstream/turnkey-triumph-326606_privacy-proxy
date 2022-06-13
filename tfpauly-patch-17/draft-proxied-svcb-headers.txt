@@ -4,12 +4,12 @@
 
 Network Working Group                                           T. Pauly
 Internet-Draft                                               Apple, Inc.
-Intended status: Standards Track                              2 May 2022
-Expires: 3 November 2022
+Intended status: Standards Track                            13 June 2022
+Expires: 15 December 2022
 
 
               HTTP Header Fields for Proxied SVCB Metadata
-                       draft-proxied-svcb-headers
+                   draft-proxied-svcb-headers-latest
 
 Abstract
 
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 November 2022.
+   This Internet-Draft will expire on 15 December 2022.
 
 Copyright Notice
 
@@ -202,15 +202,15 @@ Table of Contents
               Schwartz, B., Bishop, M., and E. Nygren, "Service binding
               and parameter specification via the DNS (DNS SVCB and
               HTTPS RRs)", Work in Progress, Internet-Draft, draft-ietf-
-              dnsop-svcb-https-08, 12 October 2021,
+              dnsop-svcb-https-10, 24 May 2022,
               <https://datatracker.ietf.org/doc/html/draft-ietf-dnsop-
-              svcb-https-08>.
+              svcb-https-10>.
 
    [I-D.ietf-masque-connect-udp]
               Schinazi, D., "Proxying UDP in HTTP", Work in Progress,
-              Internet-Draft, draft-ietf-masque-connect-udp-10, 18 April
+              Internet-Draft, draft-ietf-masque-connect-udp-14, 8 June
               2022, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              masque-connect-udp-10>.
+              masque-connect-udp-14>.
 
    [I-D.ietf-tls-esni]
               Rescorla, E., Oku, K., Sullivan, N., and C. A. Wood, "TLS
