@@ -1594,8 +1594,8 @@ object whose field names and values are raw values and URLs for the parameters.<
             <td class="text-left" rowspan="1" colspan="1">List of Issuer Public Key values, each as JSON objects</td>
           </tr>
           <tr>
-            <td class="text-left" rowspan="1" colspan="1">issuer-encap-key-uri</td>
-            <td class="text-left" rowspan="1" colspan="1">Issuer Encapsulation Key URI resource URL as a JSON string</td>
+            <td class="text-left" rowspan="1" colspan="1">encap-keys</td>
+            <td class="text-left" rowspan="1" colspan="1">List of Encapsulation Key values, each as a base64url encoded EncapsulationKey value</td>
           </tr>
         </tbody>
       </table>
@@ -1622,14 +1622,18 @@ object whose field names and values are raw values and URLs for the parameters.<
 <p id="section-3-8">Issuers MAY advertise multiple token-keys for the same token-type to
 support key rotation. In this case, Issuers indicate preference for which
 token key to use based on the order of keys in the list, with preference
-given to keys earlier in the list.<a href="#section-3-8" class="pilcrow">¶</a></p>
+given to keys earlier in the list. Likewise, Issuers MAY advertise multiple
+encap-keys to support key rotation, where the order of the keys in the
+list indicates preference as with token-keys.<a href="#section-3-8" class="pilcrow">¶</a></p>
 <p id="section-3-9">As an example, the Issuer's JSON directory could look like:<a href="#section-3-9" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3-10">
 <pre>
  {
     "issuer-token-window": 86400,
     "issuer-request-uri": "https://issuer.example.net/token-request"
-    "issuer-encap-key-uri": "https://issuer.example.net/encap-key",
+    "encap-keys": [
+      &lt;encoded EncapsulationKey&gt;
+    ],
     "token-keys": [
       {
         "token-type": 3,
