@@ -5,14 +5,14 @@
 Network Working Group                                     S. Hendrickson
 Internet-Draft                                                Google LLC
 Intended status: Informational                                J. Iyengar
-Expires: 24 December 2022                                         Fastly
+Expires: 29 December 2022                                         Fastly
                                                                 T. Pauly
                                                               Apple Inc.
                                                                S. Valdez
                                                               Google LLC
                                                               C. A. Wood
                                                               Cloudflare
-                                                            22 June 2022
+                                                            27 June 2022
 
 
                   Rate-Limited Token Issuance Protocol
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 December 2022.
+   This Internet-Draft will expire on 29 December 2022.
 
 Copyright Notice
 
@@ -1720,9 +1720,9 @@ index_key = BKS-SerializePublicKey(evaluated_key)
    [KEYBLINDING]
               Denis, F., Eaton, E., and C. A. Wood, "Key Blinding for
               Signature Schemes", Work in Progress, Internet-Draft,
-              draft-dew-cfrg-signature-key-blinding-02, 3 May 2022,
-              <https://datatracker.ietf.org/doc/html/draft-dew-cfrg-
-              signature-key-blinding-02>.
+              draft-irtf-cfrg-signature-key-blinding-00, 21 June 2022,
+              <https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-
+              signature-key-blinding-00>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
