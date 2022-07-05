@@ -2675,10 +2675,11 @@ anon_issuer_origin_id = HKDF-Hash(secret=index_result,
         </h3>
 <p id="section-8.1-1">The Client Secret key is used for two purposes in this protocol: (1) computing request
 signatures and (2) computing the Anonymous Issuer Origin ID (with the corresponding
-public key). In general, using the same cryptographic key for two distinct purposes
-is considered bad practice. However, analysis of this protocol demonstrates that it
-is safe in this context. The Client Secret MUST NOT be used for any purpose outside
-of this protocol.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+public key). This is necessary to ensure the client associated with the Anonymous Issuer
+Origin ID is the same client that produced a corresponding request. In general, using
+the same cryptographic key for two distinct purposes is considered bad practice.
+However, analysis of this protocol demonstrates that it is safe in this context.
+The Client Secret MUST NOT be used for any purpose outside of this protocol.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="custom-token-request-encapsulation">
