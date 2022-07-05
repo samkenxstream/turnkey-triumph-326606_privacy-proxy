@@ -218,7 +218,7 @@ Table of Contents
            +----------------->      |    |  Issuer  |   |           |
            |          |             |    |          |   |           |
            |   TokenRequest         |    |          |   |           |
-           |   + Origin ID          |    |          |   |           |
+           |   + Anon Origin ID     |    |          |   |           |
            | [ + Encrypted Origin ] |    |          |   |           |
            +----------------->      |    |          |   |           |
            |          |             |    |          |   |           |
@@ -265,7 +265,7 @@ Table of Contents
            +----------------->      |    |  Issuer  |   |           |
            |          |             |    |          |   |           |
            |   TokenRequest         |    |          |   |           |
-           |   + Origin ID          |    |          |   |           |
+           |   + Anon Origin ID     |    |          |   |           |
            | [ + Encrypted Origin ] |    |          |   |           |
            +----------------->      |    |          |   |           |
            |          |             |    |          |   |           |
@@ -305,8 +305,8 @@ Table of Contents
    desired.  If a rotation event happens during a Client's active policy
    window, the Attester would compute a different Anonymous Issuer
    Origin ID and mistakenly conclude that the Client is acccessing a new
-   Origin.  To mitigate this, Client's provide a stable (Anonymous)
-   Origin ID in their request to the Attester, which is constant for all
+   Origin.  To mitigate this, Client's provide a stable Anonymous Origin
+   ID in their request to the Attester, which is constant for all
    requests to that Origin.  This allows the Attester to detect when
    Issuer rotation events occur without affecting Client rate limits.
 

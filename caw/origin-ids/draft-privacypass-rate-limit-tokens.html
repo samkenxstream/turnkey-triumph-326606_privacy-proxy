@@ -1430,7 +1430,7 @@ to <a href="#response-two" class="xref">Section 5.6</a>) so that the resulting t
         +-----------------&gt;      |    |  Issuer  |   |           |
         |          |             |    |          |   |           |
         |   TokenRequest         |    |          |   |           |
-        |   + Origin ID          |    |          |   |           |
+        |   + Anon Origin ID     |    |          |   |           |
         | [ + Encrypted Origin ] |    |          |   |           |
         +-----------------&gt;      |    |          |   |           |
         |          |             |    |          |   |           |
@@ -1482,7 +1482,7 @@ error instead of the issuer's token response.<a href="#section-1.2-4" class="pil
         +-----------------&gt;      |    |  Issuer  |   |           |
         |          |             |    |          |   |           |
         |   TokenRequest         |    |          |   |           |
-        |   + Origin ID          |    |          |   |           |
+        |   + Anon Origin ID     |    |          |   |           |
         | [ + Encrypted Origin ] |    |          |   |           |
         +-----------------&gt;      |    |          |   |           |
         |          |             |    |          |   |           |
@@ -1522,7 +1522,7 @@ The Anonymous Issuer Origin ID is used to track and enforce the Client rate limi
 a rotation event happens during a Client's active policy window, the Attester would
 compute a different Anonymous Issuer Origin ID and mistakenly conclude that the
 Client is acccessing a new Origin. To mitigate this, Client's provide a stable
-(Anonymous) Origin ID in their request to the Attester, which is constant for all
+Anonymous Origin ID in their request to the Attester, which is constant for all
 requests to that Origin. This allows the Attester to detect when Issuer rotation
 events occur without affecting Client rate limits.<a href="#section-1.2-7" class="pilcrow">¶</a></p>
 <span id="name-issuer-policy-window-rotati"></span><div id="fig-example-policy-windows">
