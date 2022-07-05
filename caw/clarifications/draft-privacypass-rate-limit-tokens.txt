@@ -282,11 +282,11 @@ Table of Contents
 
    Unlike the basic issuance protocol [ISSUANCE], the rate-limited
    issuance protocol in this document has additional functional and
-   state requirements for client, attester, and issuer.  Section 5.1.2
-   describes the state that the attester must track in order to enforce
-   these limits, Section 5.1.1 describes the client state necessary for
-   successive token requests with the attester, and Section 5.1.3
-   describes the state necessary for the issuer to apply rate limits.
+   state requirements for Client, Attester, and Issuer.  Section 5.1.2
+   describes the state that the Attester must track in order to enforce
+   these limits, Section 5.1.1 describes the Client state necessary for
+   successive token requests with the Attester, and Section 5.1.3
+   describes the state necessary for the Issuer to apply rate limits.
    The functional description of each participant in this protocol is
    explained in Section 5
 
