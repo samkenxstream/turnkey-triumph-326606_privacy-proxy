@@ -154,7 +154,7 @@ Table of Contents
    meets a particular bar for attestation, but cannot be used by a
    redeeming server to rate-limit specific clients.  This is because
    there is no mechanism in the issuance protocol to link repeated
-   client token requests to the same rate limit context.
+   client token requests in order to apply rate-limiting.
 
    There are several use cases for rate-limiting anonymous clients that
    are common on the Internet.  These routinely use client IP address
@@ -187,12 +187,13 @@ Table of Contents
 1.2.  Protocol Overview
 
    The issuance protocol defined in this document decouples sensitive
-   attestation context such as the client identity from the redemption
-   context such as the origin.  It does so by employing the 'Split
-   Origin, Attester, Issuer' model.  In this model, the issuer learns
-   redemption information like per-origin rate limit policies, and the
-   attester learns attestation information like client identity used to
-   maintain and enforce rate limits based on encrypted origins.
+   information in the attestation context, such as the client identity,
+   from the information in the redemption context, such as the origin.
+   It does so by employing the 'Split Origin, Attester, Issuer' model.
+   In this model, the issuer learns redemption information like per-
+   origin rate limit policies, and the attester learns attestation
+   information like client identity used to maintain and enforce rate
+   limits based on encrypted origins.
 
    Figure 1 shows how this interaction works for client requests that
    are within the rate limit.  The client's token request to the
