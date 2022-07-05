@@ -1401,10 +1401,9 @@ contexts. In some cases this might be a significant portion of browsing history.
         </h3>
 <p id="section-1.2-1">The issuance protocol defined in this document decouples sensitive information in the attestation context,
 such as the client identity, from the information in the redemption context, such as the origin. It does
-so by employing the 'Split Origin, Attester, Issuer' model. In this model, the issuer
-learns redemption information like per-origin rate limit policies, and the attester
-learns attestation information like client identity used to maintain and enforce
-rate limits based on encrypted origins.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+so by employing the 'Split Origin, Attester, Issuer' model. In this model, the Issuer
+learns redemption information like origin identity (used to determine per-origin rate limit policies), and the Attester
+learns attestation information like client identity (used to keep track of the previous instances of token issuance).<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 <p id="section-1.2-2"><a href="#fig-example-allow" class="xref">Figure 1</a> shows how this interaction works for client requests that
 are within the rate limit. The client's token request to the attester (constructed
 according to <a href="#request-one" class="xref">Section 5.3</a>, and forwarded to the issuer according to <a href="#request-two" class="xref">Section 5.4</a>)
