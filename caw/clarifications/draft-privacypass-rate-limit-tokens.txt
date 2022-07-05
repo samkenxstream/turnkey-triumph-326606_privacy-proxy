@@ -1451,7 +1451,9 @@ index_key = BKS-SerializePublicKey(evaluated_key)
    information exposed to the attester.  Oblivious HTTP [OHTTP], which
    is a protocol built on top of HPKE for request encapsulation, is not
    suitable for this purpose since it does not allow clients to
-   additionally authenticate application-layer information.
+   additionally authenticate application-layer information that is
+   visible to intermediaries, which is the case for the data visible to
+   the Attester.
 
 8.3.  Channel Security
 

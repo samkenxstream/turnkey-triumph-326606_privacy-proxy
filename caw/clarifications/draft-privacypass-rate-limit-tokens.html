@@ -2690,7 +2690,8 @@ of this protocol.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 to the issuer while also authenticating information exposed to the attester. Oblivious HTTP
 <span>[<a href="#OHTTP" class="xref">OHTTP</a>]</span>, which is a protocol built on top of HPKE for
 request encapsulation, is not suitable for this purpose since it does not allow clients to
-additionally authenticate application-layer information.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
+additionally authenticate application-layer information that is visible to intermediaries,
+which is the case for the data visible to the Attester.<a href="#section-8.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="channel-security">
