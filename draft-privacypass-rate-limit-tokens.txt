@@ -5,14 +5,14 @@
 Network Working Group                                     S. Hendrickson
 Internet-Draft                                                Google LLC
 Intended status: Informational                                J. Iyengar
-Expires: 29 December 2022                                         Fastly
+Expires: 6 January 2023                                           Fastly
                                                                 T. Pauly
                                                               Apple Inc.
                                                                S. Valdez
                                                               Google LLC
                                                               C. A. Wood
                                                               Cloudflare
-                                                            27 June 2022
+                                                             5 July 2022
 
 
                   Rate-Limited Token Issuance Protocol
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 December 2022.
+   This Internet-Draft will expire on 6 January 2023.
 
 Copyright Notice
 
@@ -156,11 +156,11 @@ Table of Contents
    tracking, among other characteristics, to implement rate-limiting.
 
    One example of this use case is rate-limiting website accesses to a
-   client to help prevent fraud.  Operations that are sensitive to
-   fraud, such as account creation on a website or logging into an
-   account, often employ rate-limiting as a defense-in-depth strategy.
-   Additional verification can be required by these pages when a client
-   exceeds a set rate-limit.
+   client to help prevent abusive behavior.  Operations that are
+   sensitive to abuse, such as account creation on a website or logging
+   into an account, often employ rate-limiting as a defense-in-depth
+   strategy.  Additional verification can be required by these pages
+   when a client exceeds a set rate-limit.
 
    Another example of this use case is a metered paywall, where an
    origin limits the number of page requests from each unique user over
@@ -1684,16 +1684,16 @@ index_key = BKS-SerializePublicKey(evaluated_key)
 
    [ARCH]     Davidson, A., Iyengar, J., and C. A. Wood, "Privacy Pass
               Architectural Framework", Work in Progress, Internet-
-              Draft, draft-ietf-privacypass-architecture-03, 7 March
+              Draft, draft-ietf-privacypass-architecture-04, 1 July
               2022, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              privacypass-architecture-03>.
+              privacypass-architecture-04>.
 
    [AUTHSCHEME]
               Pauly, T., Valdez, S., and C. A. Wood, "The Privacy Pass
               HTTP Authentication Scheme", Work in Progress, Internet-
-              Draft, draft-ietf-privacypass-auth-scheme-02, 4 April
-              2022, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              privacypass-auth-scheme-02>.
+              Draft, draft-ietf-privacypass-auth-scheme-03, 1 July 2022,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-
+              privacypass-auth-scheme-03>.
 
    [BLINDSIG] Denis, F., Jacobs, F., and C. A. Wood, "RSA Blind
               Signatures", Work in Progress, Internet-Draft, draft-irtf-
@@ -1713,8 +1713,8 @@ index_key = BKS-SerializePublicKey(evaluated_key)
    [ISSUANCE] Celi, S., Davidson, A., Faz-Hernandez, A., Valdez, S., and
               C. A. Wood, "Privacy Pass Issuance Protocol", Work in
               Progress, Internet-Draft, draft-ietf-privacypass-protocol-
-              04, 5 April 2022, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-privacypass-protocol-04>.
+              05, 1 July 2022, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-privacypass-protocol-05>.
 
    [KEYAGREEMENT]
               Barker, E., Chen, L., Roginsky, A., Vassilev, A., and R.
@@ -1782,8 +1782,8 @@ index_key = BKS-SerializePublicKey(evaluated_key)
               Celi, S., Davidson, A., Faz-Hernandez, A., Valdez, S., and
               C. A. Wood, "Privacy Pass Issuance Protocol", Work in
               Progress, Internet-Draft, draft-ietf-privacypass-protocol-
-              04, 5 April 2022, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-privacypass-protocol-04>.
+              05, 1 July 2022, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-privacypass-protocol-05>.
 
    [RFC4086]  Eastlake 3rd, D., Schiller, J., and S. Crocker,
               "Randomness Requirements for Security", BCP 106, RFC 4086,
