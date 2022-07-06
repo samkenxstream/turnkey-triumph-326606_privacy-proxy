@@ -1037,7 +1037,7 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Hendrickson, et al.</td>
-<td class="center">Expires 6 January 2023</td>
+<td class="center">Expires 7 January 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1050,12 +1050,12 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-privacypass-rate-limit-tokens-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-07-05" class="published">5 July 2022</time>
+<time datetime="2022-07-06" class="published">6 July 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-01-06">6 January 2023</time></dd>
+<dd class="expires"><time datetime="2023-01-07">7 January 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1116,7 +1116,7 @@ from anonymous clients.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 6 January 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 7 January 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1399,11 +1399,13 @@ contexts. In some cases this might be a significant portion of browsing history.
         <h3 id="name-protocol-overview">
 <a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-protocol-overview" class="section-name selfRef">Protocol Overview</a>
         </h3>
-<p id="section-1.2-1">The issuance protocol defined in this document decouples sensitive information in the attestation context,
-such as the client identity, from the information in the redemption context, such as the origin. It does
-so by employing the 'Split Origin, Attester, Issuer' model. In this model, the Issuer
-learns redemption information like origin identity (used to determine per-origin rate limit policies), and the Attester
-learns attestation information like client identity (used to keep track of the previous instances of token issuance).<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.2-1">The issuance protocol defined in this document decouples sensitive information in the
+attestation context, such as the client identity, from the information in the redemption
+context, such as the origin. It does so by employing the 'Split Origin, Attester, Issuer'
+model. In this model, the Issuer learns redemption information like origin identity (used
+to determine per-origin rate limit policies), and the Attester learns attestation
+information like client identity (used to keep track of the previous instances of token
+issuance).<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 <p id="section-1.2-2"><a href="#fig-example-allow" class="xref">Figure 1</a> shows how this interaction works for client requests that
 are within the rate limit. The Client's token request to the Attester (constructed
 according to <a href="#request-one" class="xref">Section 5.3</a>, and forwarded to the Issuer according to <a href="#request-two" class="xref">Section 5.4</a>)
@@ -1427,13 +1429,18 @@ to <a href="#response-two" class="xref">Section 5.6</a>) so that the resulting t
         |          | Attest      |    +----------+   |           |
         +-----------------&gt;      |    |  Issuer  |   |           |
         |          |             |    |          |   |           |
+        |   TokenRequest         |    |          |   |           |
+        |   + Anon Origin ID     |    |          |   |           |
+        | [ + Encrypted Origin ] |    |          |   |           |
+        +-----------------&gt;      |    |          |   |           |
+        |          |             |    |          |   |           |
         |          |       TokenRequest          |   |           |
-        |          |      [ + encrypted origin ] |   |           |
-        +----------------------------------&gt;     |   |           |
+        |          |      [ + Encrypted origin ] |   |           |
+        |          |     +-------------------&gt;   |   |           |
         |          |             |    |          |   |           |
         |          |             |    |          |   |           |
         |          |       TokenResponse         |   |           |
-        |          |      [ + rate limit ]       |   |           |
+        |          |      [ + Rate limit ]       |   |           |
         |          |     &lt;-------------------+   |   |           |
         |          |             |    |          |   |           |
         |          |  in limit?  |    |          |   |           |
@@ -1474,13 +1481,18 @@ error instead of the issuer's token response.<a href="#section-1.2-4" class="pil
         |          | Attest      |    +----------+   |           |
         +-----------------&gt;      |    |  Issuer  |   |           |
         |          |             |    |          |   |           |
+        |   TokenRequest         |    |          |   |           |
+        |   + Anon Origin ID     |    |          |   |           |
+        | [ + Encrypted Origin ] |    |          |   |           |
+        +-----------------&gt;      |    |          |   |           |
+        |          |             |    |          |   |           |
         |          |       TokenRequest          |   |           |
-        |          |      [ + encrypted origin ] |   |           |
-        +----------------------------------&gt;     |   |           |
+        |          |      [ + Encrypted origin ] |   |           |
+        |          |     +-------------------&gt;   |   |           |
         |          |             |    |          |   |           |
         |          |             |    |          |   |           |
         |          |       TokenResponse         |   |           |
-        |          |      [ + rate limit ]       |   |           |
+        |          |       + Rate limit          |   |           |
         |          |     &lt;-------------------+   |   |           |
         |          |             |    |          |   |           |
         |          |  in limit?  |    |          |   |           |
@@ -1498,13 +1510,50 @@ error instead of the issuer's token response.<a href="#section-1.2-4" class="pil
 <a href="#name-failed-rate-limited-issuanc" class="selfRef">Failed rate-limited issuance</a>
           </figcaption></figure>
 </div>
-<p id="section-1.2-6">Unlike the basic issuance protocol <span>[<a href="#ISSUANCE" class="xref">ISSUANCE</a>]</span>, the rate-limited issuance protocol
+<p id="section-1.2-6">Each Issuer has a window over which a rate limit policy is applied. The window
+begins upon a Client's first token request and ends after the window time elapses,
+after which the Client's rate limit state is reset. Issuers apply the rate limit
+policy corresponding to a Client's encrypted Origin by using a per-Origin secret
+key to produce the token response. Attesters enforce the rate limit by combining
+the Issuer's response with a per-Client value, yielding an (Anonymous) Issuer
+Origin ID that is stable for all client requests to the designated Origin.
+The Anonymous Issuer Origin ID is used to track and enforce the Client rate limit.<a href="#section-1.2-6" class="pilcrow">¶</a></p>
+<p id="section-1.2-7">Issuers can rotate the secret they use when applying rate limits as desired. If
+a rotation event happens during a Client's active policy window, the Attester would
+compute a different Anonymous Issuer Origin ID and mistakenly conclude that the
+Client is acccessing a new Origin. To mitigate this, Client's provide a stable
+Anonymous Origin ID in their request to the Attester, which is constant for all
+requests to that Origin. This allows the Attester to detect when Issuer rotation
+events occur without affecting Client rate limits.<a href="#section-1.2-7" class="pilcrow">¶</a></p>
+<span id="name-issuer-policy-window-rotati"></span><div id="fig-example-policy-windows">
+<figure id="figure-3">
+          <div class="alignLeft art-text artwork" id="section-1.2-8.1">
+<pre>
+                          Per-Origin
+                         secret rotate
+Issuer:      -----+------------X----------+------------&gt; Time
+                  |         policy        |
+Client            |         window        |
+Token Requests:   *--------------*--------|
+                  |              |        |
+                  v              v        |
+            Issuer Origin  Issuer Origin  |
+                ID x           ID y       |
+                  |                       |
+            (policy start)          (policy end)
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-issuer-policy-window-rotati" class="selfRef">Issuer policy window rotation</a>
+          </figcaption></figure>
+</div>
+<p id="section-1.2-9">Unlike the basic issuance protocol <span>[<a href="#ISSUANCE" class="xref">ISSUANCE</a>]</span>, the rate-limited issuance protocol
 in this document has additional functional and state requirements for Client, Attester,
 and Issuer. <a href="#attester-state" class="xref">Section 5.1.2</a> describes the state that the Attester must track
 in order to enforce these limits, <a href="#client-state" class="xref">Section 5.1.1</a> describes the Client state necessary
 for successive token requests with the Attester, and <a href="#issuer-state" class="xref">Section 5.1.3</a> describes the state
 necessary for the Issuer to apply rate limits. The functional description of each
-participant in this protocol is explained in <a href="#issuance" class="xref">Section 5</a><a href="#section-1.2-6" class="pilcrow">¶</a></p>
+participant in this protocol is explained in <a href="#issuance" class="xref">Section 5</a><a href="#section-1.2-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="properties">
@@ -3057,7 +3106,7 @@ blind sk_blind according to <span>[<a href="#KEYBLINDING" class="xref">KEYBLINDI
 <p id="section-11.2-1">This document registers four new headers for use on the token issuance path
 in the "Permanent Message Header Field Names" &lt;<span><a href="https://www.iana.org/assignments/message-headers">https://www.iana.org/assignments/message-headers</a></span>&gt;.<a href="#section-11.2-1" class="pilcrow">¶</a></p>
 <span id="name-registered-http-header"></span><div id="iana-header-type-table">
-<figure id="figure-3">
+<figure id="figure-4">
           <div class="alignLeft art-text artwork" id="section-11.2-2.1">
 <pre>
     +-------------------------+----------+--------+---------------+
@@ -3075,7 +3124,7 @@ in the "Permanent Message Header Field Names" &lt;<span><a href="https://www.ian
     +-------------------------+----------+--------+---------------+
 </pre>
 </div>
-<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
 <a href="#name-registered-http-header" class="selfRef">Registered HTTP Header</a>
           </figcaption></figure>
 </div>

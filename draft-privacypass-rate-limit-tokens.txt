@@ -5,14 +5,14 @@
 Network Working Group                                     S. Hendrickson
 Internet-Draft                                                Google LLC
 Intended status: Informational                                J. Iyengar
-Expires: 6 January 2023                                           Fastly
+Expires: 7 January 2023                                           Fastly
                                                                 T. Pauly
                                                               Apple Inc.
                                                                S. Valdez
                                                               Google LLC
                                                               C. A. Wood
                                                               Cloudflare
-                                                             5 July 2022
+                                                             6 July 2022
 
 
                   Rate-Limited Token Issuance Protocol
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 January 2023.
+   This Internet-Draft will expire on 7 January 2023.
 
 Copyright Notice
 
@@ -217,13 +217,18 @@ Table of Contents
            |          | Attest      |    +----------+   |           |
            +----------------->      |    |  Issuer  |   |           |
            |          |             |    |          |   |           |
+           |   TokenRequest         |    |          |   |           |
+           |   + Anon Origin ID     |    |          |   |           |
+           | [ + Encrypted Origin ] |    |          |   |           |
+           +----------------->      |    |          |   |           |
+           |          |             |    |          |   |           |
            |          |       TokenRequest          |   |           |
-           |          |      [ + encrypted origin ] |   |           |
-           +---------------------------------->     |   |           |
+           |          |      [ + Encrypted origin ] |   |           |
+           |          |     +------------------->   |   |           |
            |          |             |    |          |   |           |
            |          |             |    |          |   |           |
            |          |       TokenResponse         |   |           |
-           |          |      [ + rate limit ]       |   |           |
+           |          |      [ + Rate limit ]       |   |           |
            |          |     <-------------------+   |   |           |
            |          |             |    |          |   |           |
            |          |  in limit?  |    |          |   |           |
@@ -259,13 +264,18 @@ Table of Contents
            |          | Attest      |    +----------+   |           |
            +----------------->      |    |  Issuer  |   |           |
            |          |             |    |          |   |           |
+           |   TokenRequest         |    |          |   |           |
+           |   + Anon Origin ID     |    |          |   |           |
+           | [ + Encrypted Origin ] |    |          |   |           |
+           +----------------->      |    |          |   |           |
+           |          |             |    |          |   |           |
            |          |       TokenRequest          |   |           |
-           |          |      [ + encrypted origin ] |   |           |
-           +---------------------------------->     |   |           |
+           |          |      [ + Encrypted origin ] |   |           |
+           |          |     +------------------->   |   |           |
            |          |             |    |          |   |           |
            |          |             |    |          |   |           |
            |          |       TokenResponse         |   |           |
-           |          |      [ + rate limit ]       |   |           |
+           |          |       + Rate limit          |   |           |
            |          |     <-------------------+   |   |           |
            |          |             |    |          |   |           |
            |          |  in limit?  |    |          |   |           |
@@ -279,6 +289,41 @@ Table of Contents
      issuance failed                                    +-----------+
 
                    Figure 2: Failed rate-limited issuance
+
+   Each Issuer has a window over which a rate limit policy is applied.
+   The window begins upon a Client's first token request and ends after
+   the window time elapses, after which the Client's rate limit state is
+   reset.  Issuers apply the rate limit policy corresponding to a
+   Client's encrypted Origin by using a per-Origin secret key to produce
+   the token response.  Attesters enforce the rate limit by combining
+   the Issuer's response with a per-Client value, yielding an
+   (Anonymous) Issuer Origin ID that is stable for all client requests
+   to the designated Origin.  The Anonymous Issuer Origin ID is used to
+   track and enforce the Client rate limit.
+
+   Issuers can rotate the secret they use when applying rate limits as
+   desired.  If a rotation event happens during a Client's active policy
+   window, the Attester would compute a different Anonymous Issuer
+   Origin ID and mistakenly conclude that the Client is acccessing a new
+   Origin.  To mitigate this, Client's provide a stable Anonymous Origin
+   ID in their request to the Attester, which is constant for all
+   requests to that Origin.  This allows the Attester to detect when
+   Issuer rotation events occur without affecting Client rate limits.
+
+                             Per-Origin
+                            secret rotate
+   Issuer:      -----+------------X----------+------------> Time
+                     |         policy        |
+   Client            |         window        |
+   Token Requests:   *--------------*--------|
+                     |              |        |
+                     v              v        |
+               Issuer Origin  Issuer Origin  |
+                   ID x           ID y       |
+                     |                       |
+               (policy start)          (policy end)
+
+                  Figure 3: Issuer policy window rotation
 
    Unlike the basic issuance protocol [ISSUANCE], the rate-limited
    issuance protocol in this document has additional functional and
@@ -1822,7 +1867,7 @@ index_key = BKS-SerializePublicKey(evaluated_key)
        | Sec-Token-Limit         |   http   |  std   | This document |
        +-------------------------+----------+--------+---------------+
 
-                      Figure 3: Registered HTTP Header
+                      Figure 4: Registered HTTP Header
 
 12.  References
 
